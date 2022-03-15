@@ -1,8 +1,8 @@
 import TodoAPI from './TodoAPI'
 
-const addButton : HTMLButtonElement | null = document.getElementById("add-button") ;
-const addInputArea : HTMLInputElement | null = document.getElementById("add-input");
-const addArea : HTMLElement | null = document.querySelector(".background__white-area__add-area");
+const addButton : HTMLButtonElement = document.getElementById("add-button") ;
+const addInputArea : HTMLInputElement = document.getElementById("add-input");
+const addArea : HTMLElement = document.querySelector(".background__white-area__add-area");
 
  let taskCounter : number;
 
@@ -39,30 +39,30 @@ async function addTaskToList()  {
 
 function renderTodo(task : Task) : void {
   document.querySelector('.background__white-area__task-list').insertAdjacentHTML('beforeend', createHtmlBlockOfTask(task));
-  document.getElementById(String(task._id)).addEventListener("click", () => taskDeleter(task._id));
+  document.getElementById(String(task._id)).addEventListener("click", () => taskDeleter(task));
 
-  const checkboxContext = document.getElementById(task._id).previousElementSibling.childNodes[1];
-  const inputboxContext : HTMLInputElement | null = checkboxContext.nextElementSibling;
+  const checkboxContext : HTMLInputElement = document.getElementById(task._id).previousElementSibling.childNodes[1];
+  const inputboxContext : HTMLInputElement = checkboxContext.nextElementSibling;
 
   inputboxContext.addEventListener("blur", () => updateTaskOnBlur(inputboxContext));
 
   renderCheckbox(checkboxContext, task.checked);
 }
-function renderCheckbox(context, isChecked) {
-  context.addEventListener("click", async () => {
+function renderCheckbox(checkboxContext : HTMLInputElement, isChecked) {
+  checkboxContext.addEventListener("click", async () => {
     try {
-      await updateTaskOnCheck(context)
+      await updateTaskOnCheck(checkboxContext)
     } catch (error) {
       console.log("renderCheckbox error " + error)
     }
   });
-  context.checked = isChecked;
-  changeTextStyle(context);
+  checkboxContext.checked = isChecked;
+  changeTextStyle(checkboxContext);
 }
-async function taskDeleter(taskId) {
-  document.getElementById(taskId).parentElement.remove();
+async function taskDeleter(task : Task) {
+  document.getElementById(task._id).parentElement.remove();
   try {
-    await TodoAPI.deleteTask(taskId);
+    await TodoAPI.deleteTask(task._id);
   } catch(error) {
     console.log(error)
   }
@@ -77,10 +77,10 @@ function createHtmlBlockOfTask(task : Task) {
     `                            <button id="${task._id}" class="background__white-area__task-list__task__delete-button button-style">Delete</button>\n` +
     '                        </div>'
 }
-async function renderCounter() {
+async function renderCounter() : Promise<number> {
   try {
     const tasks = await TodoAPI.getAllTasks();
-    document.getElementById("number-of-tasks").innerText = tasks.length;
+    return document.getElementById("number-of-tasks").innerText = tasks.length;
   } catch(error) {
     console.log("getCount error " + error)
   }
@@ -90,18 +90,21 @@ function clearTextByPressEnter() {
   addButton.addEventListener('click', addTaskToList);
   addInputArea.value = '';
 }
-async function updateTaskOnBlur(context) {
-  const taskId = context.parentNode.parentNode.lastElementChild.id;
-  const taskText = context.textContent;
-  const taskChecked = context.previousElementSibling.checked;
+async function updateTaskOnBlur(inputContext : HTMLInputElement) {
+  const checkboxContext : HTMLInputElement = inputContext.previousElementSibling;
+  const buttonContext : HTMLButtonElement = inputContext.parentNode.parentNode.lastElementChild;
+  const taskId = buttonContext.id;
+  const taskText = inputContext.textContent;
+
+  const isChecked = checkboxContext.checked;
 
   if (taskText.trim() === '') {
     return;
   }
 
   try {
-    await TodoAPI.updateTasks(taskId, taskText, taskChecked);
-    changeTextStyle(context);
+    await TodoAPI.updateTasks(taskId, taskText, isChecked);
+    changeTextStyle(inputContext);
   } catch (error) {
     console.log("updateTaskOnCheck error " + error)
   }
@@ -117,13 +120,14 @@ async function updateTaskOnCheck(context : HTMLInputElement) {
   }
 
 }
-function changeTextStyle(element : HTMLElement) {
+function changeTextStyle(element : HTMLInputElement) {
+  const inputElement : HTMLInputElement = element.parentNode.lastElementChild
   if (element.checked) {
-    element.parentNode.childNodes[3].style.textDecoration = "line-through";
-    element.parentNode.childNodes[3].style.color = "gray";
+      inputElement.style.textDecoration = "line-through";
+      inputElement.style.color = "gray";
   } else {
-    element.parentNode.lastElementChild.style.textDecoration = "none";
-    element.parentNode.childNodes[3].style.color = "black";
+    inputElement.style.textDecoration = "none";
+    inputElement.style.color = "black";
   }
 }
 async function loadTaskList() {
