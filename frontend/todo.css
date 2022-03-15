@@ -1,0 +1,106 @@
+.background {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: lightpink;
+    height: 100vh;
+    padding: 10% 0;
+    font-size: 20px;
+    font-family: Loma, serif;
+}
+
+.background__white-area {
+    display: flex;
+    flex-direction: column;
+    background-color: #fcfcfc;
+    box-shadow: 4px 0 10px black;
+    border-radius: 20px;
+    height: max-content;
+    padding: 30px 20px;
+    gap: 20px;
+    width: 40%;
+}
+.background__white-area__status{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+.background__white-area__status__number-of-tasks {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+}
+.background__white-area__task-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+.background__white-area__task-list__task__title {
+    color: gray;
+    font-size: 15pt;
+}
+.background__white-area__task-list__task {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+    gap: 5px;
+}
+
+.background__white-area__task-list__task__left-part {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap:5px;
+}
+.checkbox {
+    display: flex;
+    align-self: start;
+    position: relative;
+    top: 8px;
+}
+.background__white-area__task-list__task__text {
+    word-break: break-word;
+    text-align: left;
+    width: 100%;
+}
+
+.background__white-area__task-list__task__text:focus[contenteditable="true"]  {
+    border:none;
+    outline: none;
+}
+.background__white-area__task-list__task__text:active[contenteditable="true"] {
+    border:none;
+    outline: none;
+}
+
+.button-style {
+    border-color: black;
+    border-width: 1px;
+    border-radius: 45px;
+    padding: 5px 15px;
+    height: max-content;
+    background-color: white;
+}
+
+#add-input {
+    outline: none;
+    border-color: #e3e3e3;
+    border-width: 2px;
+    padding: 10px 7px;
+    border-radius: 45px;
+    box-shadow: none;
+    border-style: solid;
+    width: 90%;
+
+}
+.background__white-area__add-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}

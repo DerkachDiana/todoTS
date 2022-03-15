@@ -1,0 +1,28 @@
+<html xmlns:color="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>To-do</title>
+        <link href="todo.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="background">
+            <div class="background__white-area">
+                <div class="background__white-area__status">
+                    <div class="background__white-area__status__number-of-tasks">
+                        <div>Tasks:&nbsp;</div>
+                        <div id="number-of-tasks"></div>
+                    </div>
+                </div>
+                <div id="myTask" class="background__white-area__task-list">
+                    <div class="background__white-area__task-list__task">
+                        <div class="background__white-area__task-list__task__title" >Add your tasks</div>
+                    </div>
+                </div>
+                <form class="background__white-area__add-area">
+                    <input id="add-input" class="background__white-area__add-area__input" type="text" placeholder="Add Todo">
+                    <input type="submit" id="add-button" class="background__white-area__add-area__add-button button-style" value="Add">
+                </form>
+            </div>
+        </div>
+        <script src="./todo.js" type="module"></script>
+    </body>
+</html>
