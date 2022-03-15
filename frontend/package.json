@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "lint": "eslint --ext .js,.ts todo.ts"
+  },
   "devDependencies": {
     "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
